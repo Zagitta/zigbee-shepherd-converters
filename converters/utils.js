@@ -49,8 +49,13 @@ function hexToRgb(hex) {
     return {r: r, g: g, b: b};
 }
 
+function getKeyByValue(object, value, fallback = 0) {
+    return Object.keys(object).find(key => object[key] === value) || fallback;
+}
+
 module.exports = {
     rgbToXY: rgbToXY,
     hexToXY: hexToXY,
     hexToRgb: hexToRgb,
+    getKeyByValue: getKeyByValue,
 };
