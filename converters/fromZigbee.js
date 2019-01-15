@@ -1,6 +1,8 @@
 'use strict';
 
 const debounce = require('debounce');
+const common = require('./common');
+const utils = require('./utils');
 
 const clickLookup = {
     1: 'single',
@@ -1293,13 +1295,13 @@ const converters = {
                 result.remote_sensing = msg.data.data['remoteSensing'];
             }
             if (typeof msg.data.data['ctrlSeqeOfOper'] == 'number') {
-                result.control_sequence_of_operation = msg.data.data['ctrlSeqeOfOper'];
+                result.control_sequence_of_operation = common.thermostat_control_sequence_of_operations[msg.data.data['ctrlSeqeOfOper']];
             }
-            if (typeof msg.data.data['systemMode'] == 'number') {
-                result.system_mode = msg.data.data['systemMode'];
+            if (typeof msg.data.data['systemMode'] == 'number') {;
+                result.system_mode = common.thermostat_system_modes[msg.data.data['systemMode']];
             }
             if (typeof msg.data.data['runningState'] == 'number') {
-                result.running_state = msg.data.data['runningState'];
+                result.running_state = common.thermostat_running_modes[msg.data.data['runningState']];
             }
             return result;
         },
@@ -1343,13 +1345,19 @@ const converters = {
                 result.remote_sensing = msg.data.data['remoteSensing'];
             }
             if (typeof msg.data.data['ctrlSeqeOfOper'] == 'number') {
-                result.control_sequence_of_operation = msg.data.data['ctrlSeqeOfOper'];
+                const ctrl = msg.data.data['ctrlSeqeOfOper'];
+                if(common.thermostat_control_sequence_of_operations.hasOwnProperty(ctrl))
+                    result.control_sequence_of_operation = common.thermostat_control_sequence_of_operations[ctrl];
             }
             if (typeof msg.data.data['systemMode'] == 'number') {
-                result.system_mode = msg.data.data['systemMode'];
+                const mode = msg.data.data['systemMode'];
+                if(common.thermostat_system_modes.hasOwnProperty(mode))
+                    result.system_mode = common.thermostat_system_modes[mode];
             }
             if (typeof msg.data.data['runningState'] == 'number') {
-                result.running_state = msg.data.data['runningState'];
+                const state = msg.data.data['runningState'];
+                if(common.thermostat_running_modes.hasOwnProperty(state))
+                    result.running_state = common.thermostat_running_modes[state];
             }
             return result;
         },
