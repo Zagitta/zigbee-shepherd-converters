@@ -50,7 +50,7 @@ function hexToRgb(hex) {
 }
 
 function getKeyByValue(object, value, fallback = 0) {
-    return Object.keys(object).find(key => object[key] === value) || fallback;
+    return Number(Object.keys(object).find(k => object[k] === value)) || fallback;
 }
 
 module.exports = {
