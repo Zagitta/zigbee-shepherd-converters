@@ -1,7 +1,9 @@
 'use strict';
 
 const utils = require('./utils');
+const common = require('./common')
 const zclId = require('@zigbee/zcl-id');
+
 
 const cfg = {
     default: {
@@ -468,7 +470,7 @@ const converters = {
                         // 0x05 Cooling and Heating 4-pipes with Reheat: All modes are possible
                         attrId: zclId.attr(cid, attrId).value,
                         dataType: zclId.attrType(cid, attrId).value,
-                        attrData: value,
+                        attrData: utils.getKeyByValue(common.thermostat_control_sequence_of_operations, value),
                     }],
                     cfg: cfg.default,
                 };
@@ -505,7 +507,7 @@ const converters = {
                         // 0x09 Sleep
                         attrId: zclId.attr(cid, attrId).value,
                         dataType: zclId.attrType(cid, attrId).value,
-                        attrData: value,
+                        attrData: utils.getKeyByValue(common.thermostat_system_modes, value),
                     }],
                     cfg: cfg.default,
                 };
