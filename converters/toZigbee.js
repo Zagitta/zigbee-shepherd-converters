@@ -2,7 +2,7 @@
 
 const utils = require('./utils');
 const common = require('./common')
-const zclId = require('@zigbee/zcl-id');
+const zclId = require('zcl-id');
 
 
 const cfg = {
@@ -37,6 +37,10 @@ const converters = {
         convert: (key, value, message, type) => {
             const cid = 'genOnOff';
             const attrId = 'onOff';
+
+            if (typeof value !== 'string') {
+                return;
+            }
 
             if (type === 'set') {
                 return {

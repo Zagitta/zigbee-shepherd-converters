@@ -4,8 +4,8 @@ const debug = require('debug')('zigbee-shepherd-converters:devices');
 const fz = require('./converters/fromZigbee');
 const tz = require('./converters/toZigbee');
 
-const seconds = {
-    ONE_DAY: 86400,
+const repInterval = {
+    MAX: 65535,
 };
 
 const generic = {
@@ -145,7 +145,7 @@ const devices = [
         model: 'WXKG03LM',
         vendor: 'Xiaomi',
         description: 'Aqara single key wireless wall switch',
-        supports: 'single click',
+        supports: 'single, double, hold, release and long click',
         fromZigbee: [
             fz.xiaomi_battery_3v, fz.WXKG03LM_click, fz.ignore_basic_change,
             fz.xiaomi_action_click_multistate, fz.ignore_multistate_change,
@@ -157,7 +157,7 @@ const devices = [
         model: 'WXKG02LM',
         vendor: 'Xiaomi',
         description: 'Aqara double key wireless wall switch',
-        supports: 'left, right and both click',
+        supports: 'left, right, both click (and double, long click for left, right and both depending on model)',
         fromZigbee: [
             fz.xiaomi_battery_3v, fz.WXKG02LM_click, fz.ignore_basic_change,
             fz.WXKG02LM_click_multistate, fz.ignore_multistate_change,
@@ -477,16 +477,20 @@ const devices = [
         toZigbee: [],
         configure: (ieeeAddr, shepherd, coordinator, callback) => {
             const device = shepherd.find(ieeeAddr, 1);
+            const cfg = {
+                direction: 0, attrId: 33, dataType: 32, minRepIntval: 0, maxRepIntval: repInterval.MAX, repChange: 0,
+            };
+
             const actions = [
                 (cb) => device.bind('genLevelCtrl', coordinator, cb),
                 (cb) => device.bind('genPowerCfg', coordinator, cb),
-                (cb) => device.report('genPowerCfg', 'batteryPercentageRemaining', 0, seconds.ONE_DAY, 0, cb),
+                (cb) => device.foundation('genPowerCfg', 'configReport', [cfg], foundationCfg, cb),
             ];
             execute(device, actions, callback);
         },
     },
     {
-        zigbeeModel: ['TRADFRI transformer 10W'],
+        zigbeeModel: ['TRADFRI transformer 10W', 'TRADFRI Driver 10W'],
         model: 'ICPSHC24-10EU-IL-1',
         vendor: 'IKEA',
         description: 'TRADFRI driver for wireless control (10 watt)',
