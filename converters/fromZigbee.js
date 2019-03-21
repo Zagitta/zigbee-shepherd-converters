@@ -2109,6 +2109,18 @@ const converters = {
             return {action: `brightness_down_release`};
         },
     },
+    eCozy_battery: {
+        cid: 'genPowerCfg',
+        type: ['attReport', 'readRsp'],
+        convert: (model, msg, publish, options) => {
+            const battery = {max: 32, min: 25};
+            const voltage = msg.data.data['batteryVoltage'];
+            return {
+                battery: toPercentage(voltage, battery.min, battery.max),
+                voltage: voltage / 10,
+            };
+        },
+    },
     livolo_switch_dev_change: {
         cid: 'genOnOff',
         type: 'devChange',

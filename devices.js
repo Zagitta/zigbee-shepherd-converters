@@ -1094,7 +1094,7 @@ const devices = [
         description: 'Smart heating thermostat',
         supports: 'temperature, occupancy, un-/occupied heating, schedule',
         fromZigbee: [
-            fz.ignore_basic_change, fz.generic_battery_voltage,
+            fz.ignore_basic_change, fz.eCozy_battery,
             fz.thermostat_att_report, fz.thermostat_dev_change,
         ],
         toZigbee: [
@@ -1116,7 +1116,12 @@ const devices = [
                 (cb) => device.bind('genPollCtrl', coordinator, cb),
                 (cb) => device.bind('hvacThermostat', coordinator, cb),
                 (cb) => device.bind('hvacUserInterfaceCfg', coordinator, cb),
-                (cb) => device.report('hvacThermostat', 'localTemp', 5, 30, 0, cb),
+                (cb) => device.report('hvacThermostat', 'localTemp', 300, 3600, 0, cb),
+                (cb) => device.report('hvacThermostat', 'occupiedHeatingSetpoint', 1, 0, 1, cb),
+                (cb) => device.report('hvacThermostat', 'systemMode', 1, 0, 1, cb),
+                (cb) => device.report('hvacThermostat', 'runningState', 1, 0, 0, cb),
+                (cb) => device.report('hvacThermostat', 'pIHeatingDemand', 300, 3600, 0, cb),
+                (cb) => device.report('genPowerCfg', 'batteryVoltage', 1800, 43200, 0, cb),
             ];
 
             execute(device, actions, callback);
