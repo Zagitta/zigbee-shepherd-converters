@@ -418,6 +418,28 @@ const converters = {
             }
         },
     },
+    generic_time: {
+        cid: 'genTime',
+        type: ['attReport', 'readRsp'],
+        convert: (model, msg, publish, options) => {
+            const result = {};
+            if(msg.data.data.hasOwnProperty('time')) {
+                result.time = msg.data.data['time'];
+            }
+            return result;
+        }
+    },
+    generic_time_change: {
+        cid: 'genTime',
+        type: 'devChange',
+        convert: (model, msg, publish, options) => {
+            const result = {};
+            if(msg.data.data.hasOwnProperty('time')) {
+                result.time = msg.data.data['time'];
+            }
+            return result;
+        }
+    },
     generic_temperature: {
         cid: 'msTemperatureMeasurement',
         type: ['attReport', 'readRsp'],

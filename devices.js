@@ -1095,7 +1095,7 @@ const devices = [
         supports: 'temperature, occupancy, un-/occupied heating, schedule',
         fromZigbee: [
             fz.ignore_basic_change, fz.eCozy_battery,
-            fz.thermostat_att_report, fz.thermostat_dev_change,
+            fz.thermostat_att_report, fz.thermostat_dev_change, fz.generic_time, fz.generic_time_change
         ],
         toZigbee: [
             tz.factory_reset, tz.thermostat_local_temperature, tz.thermostat_local_temperature_calibration,
@@ -1116,8 +1116,8 @@ const devices = [
                 (cb) => device.bind('genPollCtrl', coordinator, cb),
                 (cb) => device.bind('hvacThermostat', coordinator, cb),
                 (cb) => device.bind('hvacUserInterfaceCfg', coordinator, cb),
-                (cb) => device.report('hvacThermostat', 'localTemp', 300, 3600, 1, cb),
-                (cb) => device.report('hvacThermostat', 'pIHeatingDemand', 300, 3600, 1, cb),
+                (cb) => device.report('hvacThermostat', 'localTemp', 60, 600, 1, cb),
+                (cb) => device.report('hvacThermostat', 'pIHeatingDemand', 60, 600, 1, cb),
             ];
 
             execute(device, actions, callback);
