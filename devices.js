@@ -1116,12 +1116,8 @@ const devices = [
                 (cb) => device.bind('genPollCtrl', coordinator, cb),
                 (cb) => device.bind('hvacThermostat', coordinator, cb),
                 (cb) => device.bind('hvacUserInterfaceCfg', coordinator, cb),
-                (cb) => device.report('hvacThermostat', 'localTemp', 300, 3600, 0, cb),
-                (cb) => device.report('hvacThermostat', 'occupiedHeatingSetpoint', 1, 0, 1, cb),
-                (cb) => device.report('hvacThermostat', 'systemMode', 1, 0, 1, cb),
-                (cb) => device.report('hvacThermostat', 'runningState', 1, 0, 0, cb),
-                (cb) => device.report('hvacThermostat', 'pIHeatingDemand', 300, 3600, 0, cb),
-                (cb) => device.report('genPowerCfg', 'batteryVoltage', 1800, 43200, 0, cb),
+                (cb) => device.report('hvacThermostat', 'localTemp', 300, 3600, 1, cb),
+                (cb) => device.report('hvacThermostat', 'pIHeatingDemand', 300, 3600, 1, cb),
             ];
 
             execute(device, actions, callback);

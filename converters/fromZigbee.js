@@ -2113,12 +2113,14 @@ const converters = {
         cid: 'genPowerCfg',
         type: ['attReport', 'readRsp'],
         convert: (model, msg, publish, options) => {
-            const battery = {max: 32, min: 25};
+            const battery = {max: 32, min: 24};
             const voltage = msg.data.data['batteryVoltage'];
-            return {
-                battery: toPercentage(voltage, battery.min, battery.max),
-                voltage: voltage / 10,
-            };
+            const result = {};
+            if(voltage) {
+                result.battery = toPercentage(voltage, battery.min, battery.max);
+                result.voltage = voltage / 10;
+            }
+            return result;
         },
     },
     livolo_switch_dev_change: {
