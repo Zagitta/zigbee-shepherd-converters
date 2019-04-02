@@ -1103,7 +1103,7 @@ const devices = [
             tz.thermostat_unoccupied_heating_setpoint, tz.thermostat_setpoint_raise_lower,
             tz.thermostat_remote_sensing, tz.thermostat_control_sequence_of_operation, tz.thermostat_system_mode,
             tz.thermostat_weekly_schedule, tz.thermostat_clear_weekly_schedule, tz.thermostat_weekly_schedule_rsp,
-            tz.thermostat_relay_status_log, tz.thermostat_relay_status_log_rsp,
+            tz.thermostat_relay_status_log, tz.thermostat_relay_status_log_rsp, tz.thermostat_running_state
         ],
         configure: (ieeeAddr, shepherd, coordinator, callback) => {
             const device = shepherd.find(ieeeAddr, 3);
