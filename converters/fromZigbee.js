@@ -2135,7 +2135,7 @@ const converters = {
         cid: 'genPowerCfg',
         type: ['attReport', 'readRsp'],
         convert: (model, msg, publish, options) => {
-            const battery = {max: 32, min: 24};
+            const battery = {max: 30, min: 23};
             const voltage = msg.data.data['batteryVoltage'];
             const result = {};
             if(voltage) {
